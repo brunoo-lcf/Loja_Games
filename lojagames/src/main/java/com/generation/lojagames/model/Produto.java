@@ -14,29 +14,41 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tb_produtos")
 public class Produto {
-	
+
 	@Id // Indica que este atributo será uma chave primaria na minha tabela
-	@GeneratedValue(strategy = GenerationType.IDENTITY)// Indica que tera um auto-increment
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Indica que tera um auto-increment
 	private Long id;
-	
+
 	@NotNull(message = "Este campo é de preenchimento obrigatório!")
 	private String nome;
-	
+
 	@NotNull(message = "Este campo é de preenchimento obrigatório!")
 	@Size(min = 15, max = 300, message = "Este campo deve conter no mínimo 15 e no máximo 300 caracteres!")
 	private String descricao;
-	
+
 	@NotNull(message = "Este campo é de preenchimento obrigatório!")
 	private String plataforma;
-	
+
 	@NotNull(message = "Este campo é de preenchimento obrigatório!")
 	private Integer preco;
-	
-	@ManyToOne//Relação entre tabelas de muitos para um.
-	@JsonIgnoreProperties("postagem")
+
+	@ManyToOne // Relação entre tabelas de muitos para um.
+	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
+
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Usuario usuario;
 	
-	//Iinicio dos Getters and Setters criados
+	// Iinicio dos Getters and Setters criados
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public Categoria getCategoria() {
 		return categoria;
@@ -85,7 +97,5 @@ public class Produto {
 	public void setPreco(Integer preco) {
 		this.preco = preco;
 	}
-	
-	
 
 }
